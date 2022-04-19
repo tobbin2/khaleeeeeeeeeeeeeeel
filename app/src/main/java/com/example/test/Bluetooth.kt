@@ -24,7 +24,7 @@ import java.util.*
 import java.util.logging.Handler
 
 
-class Bluetooth3 ( activity: com.example.test.StartPageActivity) {
+class Bluetooth3 ( activity: com.example.test.MainActivity) {
     var _activity = activity
     val bluetoothManager: BluetoothManager? = ContextCompat.getSystemService(_activity, BluetoothManager::class.java)
     var bluetoothAdapter: BluetoothAdapter? = null
@@ -65,15 +65,15 @@ class Bluetooth3 ( activity: com.example.test.StartPageActivity) {
         if(ContextCompat.checkSelfPermission(_activity, ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED ) { //BLUETOOTH_CONNECT
 
             if (ActivityCompat.shouldShowRequestPermissionRationale(_activity, ACCESS_COARSE_LOCATION)) {
-                showExplanation("Permission Needed", "Bror du måste", ACCESS_COARSE_LOCATION, Global.ACCESS_COARSE_LOCATION_REQUEST_CODE); //Global.BLUETOOTH_CONNECT_REQUEST_CODE
+                showExplanation("Permission Needed", "Bror du måste", ACCESS_COARSE_LOCATION, Global.BLUETOOTH_REQUEST_CODE); //Global.BLUETOOTH_CONNECT_REQUEST_CODE
             } else {
-                requestPermission(ACCESS_COARSE_LOCATION, Global.ACCESS_COARSE_LOCATION_REQUEST_CODE); //BLUETOOTH_CONNECT, Global.BLUETOOTH_REQUEST_CODE
+                requestPermission(ACCESS_COARSE_LOCATION, Global.BLUETOOTH_REQUEST_CODE); //BLUETOOTH_CONNECT, Global.BLUETOOTH_REQUEST_CODE
             }
 
-            if(hasAlreadyChecked)
-                return null;
+            //if(hasAlreadyChecked)
+            //    return null;
 
-            return getPairedDevices(true);
+            //return getPairedDevices(true);
         }
 
         val pairedDevices: Set<BluetoothDevice>? = bluetoothAdapter?.bondedDevices
@@ -86,18 +86,18 @@ class Bluetooth3 ( activity: com.example.test.StartPageActivity) {
         if(ContextCompat.checkSelfPermission(_activity, ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED ) { //BLUETOOTH_CONNECT
 
             if (ActivityCompat.shouldShowRequestPermissionRationale(_activity, ACCESS_COARSE_LOCATION)) {
-                showExplanation("Permission Needed", "Bror du måste", ACCESS_COARSE_LOCATION, Global.ACCESS_COARSE_LOCATION_REQUEST_CODE); //Global.BLUETOOTH_SCAN_REQUEST_CODE
+                showExplanation("Permission Needed", "Bror du måste", ACCESS_COARSE_LOCATION, Global.BLUETOOTH_SCAN_REQUEST_CODE); //Global.BLUETOOTH_SCAN_REQUEST_CODE
             } else {
-                requestPermission(ACCESS_COARSE_LOCATION, Global.ACCESS_COARSE_LOCATION_REQUEST_CODE); //BLUETOOTH_SCAN, Global.BLUETOOTH_SCAN_REQUEST_CODE
+                requestPermission(ACCESS_COARSE_LOCATION, Global.BLUETOOTH_SCAN_REQUEST_CODE); //BLUETOOTH_SCAN, Global.BLUETOOTH_SCAN_REQUEST_CODE
             }
 
-            if(hasAlreadyChecked)
-                return;
+            //if(hasAlreadyChecked)
+            //    return;
 
-            getDiscoverableDevices(leScanCallback, true);
+            //getDiscoverableDevices(leScanCallback, true);
         }
 
-        if (!scanning) { // Stops scanning after a pre-defined scan period.
+        /*if (!scanning) { // Stops scanning after a pre-defined scan period.
 
             scanning = true
 
@@ -105,7 +105,7 @@ class Bluetooth3 ( activity: com.example.test.StartPageActivity) {
         } else {
             scanning = false
             bluetoothLeScanner?.stopScan(leScanCallback)
-        }
+        }*/
     }
 
 
@@ -179,7 +179,7 @@ class Bluetooth3 ( activity: com.example.test.StartPageActivity) {
     }
 
     private fun requestPermission(permissionName: String, permissionRequestCode: Int) {
-        requestPermissions(_activity, arrayOf(permissionName), permissionRequestCode)
+        ActivityCompat.requestPermissions(_activity, arrayOf(permissionName), permissionRequestCode)
     }
 
 

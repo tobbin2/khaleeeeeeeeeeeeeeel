@@ -1,62 +1,42 @@
+
+/*
 package com.example.test
 
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.le.ScanCallback
 import android.bluetooth.le.ScanResult
-import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
-import android.view.View
-import android.widget.ArrayAdapter
-import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
+import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
-import com.example.test.databinding.ActivityStartPageBinding
-
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
+import com.example.test.databinding.FragmentDashboardBinding.inflate
+import com.google.android.material.bottomnavigation.BottomNavigationView
 class StartPageActivity : AppCompatActivity() {
-    var leDeviceListAdapter: ArrayAdapter<BluetoothDevice>? = null
 
-    private lateinit var appBarConfiguration: AppBarConfiguration
-    private lateinit var binding: ActivityStartPageBinding
-
+    private lateinit var binding: StartPageActivity
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //super.onRequestPermissionsResult();
+        binding = StartPageActivity.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        setContentView(R.layout.activity_start_page)
+        val navView: BottomNavigationView = binding.navView
 
-        val listView: ListView = findViewById<View>(R.id.bluetooth_device_lw) as ListView
-        listView.setAdapter(leDeviceListAdapter)
-        leDeviceListAdapter = ArrayAdapter<BluetoothDevice>(this, androidx.appcompat.R.layout.abc_activity_chooser_view_list_item);
-        var bluetooth3 = Bluetooth3(this);
-        //var list = bluetooth3.getPairedDevices();
-        bluetooth3.getDiscoverableDevices(leScanCallback);
+        val navController = findNavController(R.id.nav_host_fragment_activity_main)
+        // Passing each menu ID as a set of Ids because each
+        // menu should be considered as top level destinations.
+        val appBarConfiguration = AppBarConfiguration(setOf(
+            R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications))
+        setupActionBarWithNavController(navController, appBarConfiguration)
+        navView.setupWithNavController(navController)
 
-    }
+        //Log.i("ald", "connected??? " + list.toString())
 
-    public val leScanCallback: ScanCallback = object : ScanCallback() {
-        override fun onScanResult(callbackType: Int, result: ScanResult) {
-            super.onScanResult(callbackType, result)
-            Log.i("ald", "got device " + result.device)
-            leDeviceListAdapter?.add(result.device)
-            leDeviceListAdapter?.notifyDataSetChanged()
-        }
-    }
 
-    public fun devicePicked() {
 
     }
 
-
-    private fun requestPermission(permissionName: String, permissionRequestCode: Int) {
-        ActivityCompat.requestPermissions(this, arrayOf(permissionName), permissionRequestCode)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        Log.i("ald", "logged, " + requestCode + " " + resultCode + " " + data);
-
-    }
-
-}
+}*/
